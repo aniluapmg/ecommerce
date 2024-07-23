@@ -1,38 +1,46 @@
+
 package com.example.ecommerce.network
 
-import android.widget.Toast
 import com.example.ecommerce.models.Product
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import okio.Okio
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
-interface MyAPI {
+interface ProductInterface{
+
     @GET("products")
     fun getProducts(): Call<List<Product>>
+
 }
 
-object Servicio {
-    val endPoint = "https://fakestoreapi.com/"
+object ApiClient {
 
-    val getProduct: MyAPI
-        get() {
+
+    val BASE_URL = "https://fakestoreapi.com/"
+    val getProduct: ProductInterface
+        get()
+        {
+            //gson crear un objeto capaz de almacenar un Json
             val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
+            //crea una puerta de acceso al protocolo HTTP
+            val interceptor =  HttpLoggingInterceptor()
+            //mostrar toda la informacion de las llaves
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+            //cliente es el en este caso el dispositivo Android/ en la web es el navegador
             val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-            val retrofit = Retrofit.Builder().baseUrl(endPoint).client(client)
+            val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build()
 
-            return retrofit.create(MyAPI::class.java)
+            return retrofit.create(ProductInterface::class.java)
+
+
         }
+
+
+
 }
-
-

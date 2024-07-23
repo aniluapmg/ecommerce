@@ -3,7 +3,7 @@ package com.example.ecommerce.models
 data class Product(
     val id: String,
     val title: String,
-    val price: Int,
+    val price: Double,
     val category: String,
     val description: String,
     val url: String,
