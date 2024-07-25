@@ -59,4 +59,5 @@ dependencies {
     implementation  ("io.coil-kt:coil:2.6.0")
     implementation ("com.squareup.okhttp3:okhttp:4.11.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation (libs.picasso)
 }
