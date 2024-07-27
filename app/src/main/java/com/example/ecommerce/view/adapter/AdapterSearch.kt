@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ecommerce.data.Product
 
-import com.example.ecommerce.model.model.Product
 
 import com.example.ecommerce.databinding.ItemProductBinding
 

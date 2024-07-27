@@ -1,6 +1,6 @@
 package com.example.ecommerce.model.retrofit
 
-import com.example.ecommerce.model.model.Product
+import com.example.ecommerce.data.Product
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

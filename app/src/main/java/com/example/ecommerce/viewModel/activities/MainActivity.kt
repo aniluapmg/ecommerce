@@ -5,7 +5,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.ecommerce.R
-import com.example.ecommerce.model.model.Product
 import com.example.ecommerce.databinding.ActivityMainBinding
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.view.fragments.LoginFragment
