@@ -4,12 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ecommerce.data.Product
 
-import com.example.ecommerce.model.model.Product
+
 import com.example.ecommerce.databinding.ItemProductBinding
 
 
 class AdapterSearch(
+
+
 
 ) : RecyclerView.Adapter<AdapterSearch.ViewHolder>() {
 
@@ -17,6 +20,7 @@ class AdapterSearch(
 
 
     private lateinit var products: List<Product>
+
 
     inner class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
         fun onBind(product: Product) {
@@ -27,6 +31,7 @@ class AdapterSearch(
 
 
     fun setListProducts(products_response: List<Product>): List<Product> = products_response
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)

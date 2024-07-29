@@ -5,9 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.ecommerce.data.Product
 import com.example.ecommerce.databinding.FragmentProductBinding
 
-import com.example.ecommerce.model.model.Product
+
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.view.adapter.AdapterSearch
 import retrofit2.Call
@@ -51,7 +52,7 @@ class ProductFragment : Fragment() {
                     lateinit var products :  List<Product>
                     if (productos != null) {
                         for(p in productos){
-                            products
+                          println()
                         }
                         productAdapter.setListProducts(products)
                     } else {

@@ -63,12 +63,12 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     //ViewModel
-    val lifecycle_version = "2.6.1"
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
-    val livedata_version = "2.6.0"
-    implementation ("androidx.lifecycle:lifecycle-livedata:$livedata_version")
-    val runtime_version = "2.6.0"
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$runtime_version")
+   // val lifecycle_version = "2.6.1"
+   // implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+   // val livedata_version = "2.6.0"
+    //implementation ("androidx.lifecycle:lifecycle-livedata:$livedata_version")//
+    //val runtime_version = "2.6.0"
+    //implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$runtime_version")
 
     //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
