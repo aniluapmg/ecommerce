@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ecommerce.data.Product
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerce.databinding.FragmentProductBinding
-
-
+import com.example.ecommerce.data.Product
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.view.adapter.AdapterSearch
 import retrofit2.Call
@@ -16,18 +16,15 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
 class ProductFragment : Fragment() {
 
-    private lateinit var productAdapter: AdapterSearch
+    private var productAdapter: AdapterSearch = AdapterSearch()
     private lateinit var binding: FragmentProductBinding
-
+    private lateinit var recyclerView: RecyclerView
+    private var products: List<Product> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        conectarApi()
-
     }
 
     override fun onCreateView(
@@ -35,8 +32,11 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProductBinding.inflate(inflater, container, false)
+        recyclerView = binding.rvProduct
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = productAdapter // productAdapter sin ()
+        conectarApi() // Llama a la API después de configurar el RecyclerView
         return binding.root
-
     }
 
     fun conectarApi() {
@@ -49,16 +49,12 @@ class ProductFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val productos = response.body()
-                    lateinit var products :  List<Product>
                     if (productos != null) {
-                        for(p in productos){
-                          println()
-                        }
-                        productAdapter.setListProducts(products)
+                        productAdapter.setListProducts(productos)
+                        productAdapter.notifyDataSetChanged() // Notifica al adaptador sobre los cambios
                     } else {
                         println("No se recibieron datos de productos")
                     }
-
                 } else {
                     println("Error en la respuesta: ${response.code()}")
                 }
@@ -69,6 +65,5 @@ class ProductFragment : Fragment() {
             }
         })
     }
-
 
 }
