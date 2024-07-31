@@ -42,6 +42,8 @@ class ProductFragment : Fragment() {
     fun conectarApi() {
         val callObject = Servicio.getProduct.getProducts()
 
+        //si yo, callObject.enqueue, funciono, llamo a object.onResponse(call, response)
+        //de lo contrario llamaré a object.onFailure(call, t)
         callObject.enqueue(object : Callback<List<Product>> {
             override fun onResponse(
                 call: Call<List<Product>>,
