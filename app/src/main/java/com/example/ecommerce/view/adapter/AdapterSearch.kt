@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerce.R
 import com.example.ecommerce.data.Product
 import com.example.ecommerce.databinding.ItemProductBinding
+import com.squareup.picasso.Picasso
 
 
 class AdapterSearch(
@@ -25,7 +26,10 @@ class AdapterSearch(
         fun onBind(product: Product) {
             binding.nameProduct.text = product.title
             binding.priceProduct.text = product.price.toString()
+            Picasso.get().load(product.url).into(binding.imgProduct) //mostramos la imagen recuperada con piccaso
+
         }
+
     }
 
     fun setListProducts(productsResponse: List<Product>): List<Product> {

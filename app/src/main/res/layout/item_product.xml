@@ -13,12 +13,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
+        android:padding="20dp"
         >
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_product"
             android:layout_width="64dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
