@@ -53,6 +53,8 @@ dependencies {
     //Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
 
     //picasso
     implementation (libs.picasso)
