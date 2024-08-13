@@ -45,46 +45,35 @@ kapt {
 }
 
 dependencies {
-    //core
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.legacy.support.v4)
-    
     //view
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.fragment.ktx)
-    
-    //lifecycle
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    
+
+    //Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    //picasso
+    implementation (libs.picasso)
+
+    //core
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+
+    //material
+    implementation(libs.material)
+
     //test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    
-    //material
-    implementation(libs.material)
 
-    // Coil
-    implementation(libs.coil)
+    //Room
+    val room_version = "2.6.1"
 
-    // OkHttp
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
-    // Picasso
-    implementation(libs.picasso)
-
-    // Room
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler) // Usar kapt para el compilador de Room
-    implementation(libs.room.ktx)
-    
-    //viewmodel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.room.ktx)
 }

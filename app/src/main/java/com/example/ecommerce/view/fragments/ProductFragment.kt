@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerce.databinding.FragmentProductBinding
 import com.example.ecommerce.data.Product
-import com.example.ecommerce.model.ProductViewModel
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.view.adapter.AdapterSearch
+import com.example.ecommerce.view.viewModel.ProductViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
