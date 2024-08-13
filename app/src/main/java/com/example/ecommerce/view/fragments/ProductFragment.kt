@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerce.databinding.FragmentProductBinding
 import com.example.ecommerce.data.Product
+import com.example.ecommerce.model.ProductViewModel
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.view.adapter.AdapterSearch
 import retrofit2.Call
@@ -22,6 +24,7 @@ class ProductFragment : Fragment() {
     private lateinit var binding: FragmentProductBinding
     private lateinit var recyclerView: RecyclerView
     private var products: List<Product> = listOf()
+    private val productViewModel: ProductViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,8 @@ class ProductFragment : Fragment() {
     ): View? {
         binding = FragmentProductBinding.inflate(inflater, container, false)
         recyclerView = binding.rvProduct
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = productAdapter // productAdapter sin ()
         conectarApi() // Llama a la API después de configurar el RecyclerView
         return binding.root
@@ -67,5 +71,4 @@ class ProductFragment : Fragment() {
             }
         })
     }
-
 }

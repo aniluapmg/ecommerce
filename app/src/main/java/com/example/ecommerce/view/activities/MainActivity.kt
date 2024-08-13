@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        conectarApi()
         setCurrentFragment(loginFragment)
     }
     
@@ -31,33 +30,5 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.frameLayout, fragment)
             commit()
         }
-    }
-
-    fun conectarApi() {
-        val callObject = Servicio.getProduct.getProducts()
-
-        callObject.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(
-                call: Call<List<Product>>,
-                response: Response<List<Product>>
-            ) {
-                if (response.isSuccessful) {
-                    val productos = response.body()
-                    if (productos != null) {
-                        for (producto in productos) {
-                            println("Producto: ${producto.title}, Precio: ${producto.price}")
-                        }
-                    } else {
-                        println("No se recibieron datos de productos")
-                    }
-                } else {
-                    println("Error en la respuesta: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                println("Error en la llamada: ${t.message}")
-            }
-        })
     }
 }
