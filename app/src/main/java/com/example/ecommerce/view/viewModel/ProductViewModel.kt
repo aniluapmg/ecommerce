@@ -11,7 +11,4 @@ class ProductViewModel(private val productRepository: ProductRepositoryImp) : Vi
     suspend fun getProducts() = productRepository.getProducts()
     
     suspend fun getProductById(id: Int) = productRepository.getProductById(id)
-
-
-
 }

@@ -17,7 +17,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class ProductFragment : Fragment() {
 
     private var productAdapter: AdapterSearch = AdapterSearch()
@@ -39,36 +38,13 @@ class ProductFragment : Fragment() {
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = productAdapter // productAdapter sin ()
-        conectarApi() // Llama a la API después de configurar el RecyclerView
+        //conectarApi() // Llama a la API después de configurar el RecyclerView
+        inicializar()
         return binding.root
     }
-
-    fun conectarApi() {
-        val callObject = Servicio.getProduct.getProducts()
-
-        //si yo, callObject.enqueue, funciono, llamo a object.onResponse(call, response)
-        //de lo contrario llamaré a object.onFailure(call, t)
-        callObject.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(
-                call: Call<List<Product>>,
-                response: Response<List<Product>>
-            ) {
-                if (response.isSuccessful) {
-                    val productos = response.body()
-                    if (productos != null) {
-                        productAdapter.setListProducts(productos)
-                        productAdapter.notifyDataSetChanged() // Notifica al adaptador sobre los cambios
-                    } else {
-                        println("No se recibieron datos de productos")
-                    }
-                } else {
-                    println("Error en la respuesta: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                println("Error en la llamada: ${t.message}")
-            }
-        })
+    
+    private fun inicializar() {
+        //Esto debe ser hecho con corrutina
+        //productViewModel.getProducts()
     }
 }

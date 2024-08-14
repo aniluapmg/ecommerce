@@ -12,24 +12,20 @@ import retrofit2.http.GET
 interface MyAPI {
     @GET("products")
     fun getProducts(): Call<List<Product>>
-
 }
 
-object Servicio {
+class Servicio {
     val endPoint = "https://fakestoreapi.com/"
 
-    val getProduct: MyAPI
-        get() {
-            val gson = GsonBuilder().setLenient().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    fun getProducts(): Call<List<Product>> {
+        val gson = GsonBuilder().setLenient().create()
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-            val retrofit = Retrofit.Builder().baseUrl(endPoint).client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson)).build()
+        val retrofit = Retrofit.Builder().baseUrl(endPoint).client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson)).build()
 
-            return retrofit.create(MyAPI::class.java)
-        }
+        return retrofit.create(MyAPI::class.java).getProducts()
+    }
 }
-
-
