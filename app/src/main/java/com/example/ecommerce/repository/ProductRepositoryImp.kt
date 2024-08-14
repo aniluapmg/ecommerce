@@ -1,6 +1,8 @@
 package com.example.ecommerce.repository
 
 import com.example.ecommerce.data.Product
+import com.example.ecommerce.model.model.ProductEntity
+import com.example.ecommerce.model.retrofit.MyAPI
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.model.room.ProductDao
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +14,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 class ProductRepositoryImp(
-//    private val retrofit: Retrofit
+    private val call: Call<List<Product>>,
     // Retrofit viene implementado desde el constructor de la clase y no aquí
     private val productDao: ProductDao
     // ProductDao se trae desde parametro para poder acceder a la bbdd
@@ -22,29 +24,7 @@ class ProductRepositoryImp(
     // Al ser una funcion asincrona se quiere decir que puede tardar un tiempo en responder
     // productDao se usa para acceder a la bbdd y así poder usarlos
 
-    override suspend fun getProducts(): Flow<List<Product>?> {
-        TODO("Not yet implemented")
-        //Chequear si hay productos en la base de datos
-        //Si hay productos, devolverlos
-        //Si no hay productos, obtenerlos de la API y devolverlos
-        //Luego de obtenerlos de la API, guardarlos en la base de datos
-    }
-
-    override suspend fun getProductById(id: Int): Flow<Product?> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun addProduct(product: Product) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateProduct(product: Product) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteProduct(id: Int) {
-        TODO("Not yet implemented")
-    }
+    //llamar a retrofit
 
     // Método para llamar a la API
     private suspend fun getProductsFromApi(): List<Product>? {
@@ -68,4 +48,29 @@ class ProductRepositoryImp(
             }
         }
     }
+
+    //llamar a room
+
+
+    override suspend fun getProducts(): List<ProductEntity> = productDao.getAll()
+
+    override suspend fun getProductById(id: Int): List<ProductEntity> = productDao.getProductById(id)
+
+    override suspend fun addProduct(productEntity: ProductEntity) = productDao.insertProduct(productEntity)
+
+    override suspend fun updateProduct(productEntity: ProductEntity) = productDao.updateProduct(productEntity)
+
+    override suspend fun deleteProduct(productEntity: ProductEntity) = productDao.deleteProduct(productEntity)
+
+
+    // se agrega vinculación entre Retrofit y Room
+
+    suspend fun refreshProducts()
+    {
+        val productsFromApi = getProductsFromApi()
+        productsFromApi?.forEach {
+            addProduct(ProductEntity(it.id, it.title, it.price, it.category, it.description, it.url))
+        }
+    }
+
 }
