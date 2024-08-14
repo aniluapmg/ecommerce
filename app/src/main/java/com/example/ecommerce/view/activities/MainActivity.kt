@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.example.ecommerce.R
 import com.example.ecommerce.data.Product
 import com.example.ecommerce.databinding.ActivityMainBinding
-import com.example.ecommerce.network.Servicio
 import com.example.ecommerce.view.fragments.LoginFragment
 import com.example.ecommerce.view.viewModel.ProductViewModel
 import retrofit2.Call
