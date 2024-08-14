@@ -3,7 +3,9 @@ package com.example.ecommerce.repository
 import com.example.ecommerce.data.Product
 import com.example.ecommerce.model.retrofit.Servicio
 import com.example.ecommerce.model.room.ProductDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,35 +45,27 @@ class ProductRepositoryImp(
     override suspend fun deleteProduct(id: Int) {
         TODO("Not yet implemented")
     }
-    
-    private fun getProductsFromApi(): List<Product> {
-        val callObject = Servicio().getProducts()
 
-        //si yo, callObject.enqueue, funciono, llamo a object.onResponse(call, response)
-        //de lo contrario llamaré a object.onFailure(call, t)
-        callObject.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(
-                call: Call<List<Product>>,
-                response: Response<List<Product>>
-            ) {
-                if (response.isSuccessful) {
-                    val productos = response.body()
-                    if (productos != null) {
-                        //productAdapter.setListProducts(productos)
-                        //productAdapter.notifyDataSetChanged() // Notifica al adaptador sobre los cambios
-                    } else {
-                        println("No se recibieron datos de productos")
-                    }
-                } else {
-                    println("Error en la respuesta: ${response.code()}")
-                }
+    // Método para llamar a la API
+    private suspend fun getProductsFromApi(): List<Product>? {
+        // Llamada a la API utilizando Retrofit
+        return withContext(Dispatchers.IO) {
+            // Se usa withContext para cambiar el hilo de ejecución a un hilo de E/S
+            // E/S es donde se hacen operaciones de entrada/salida, como la red o la base de datos
+            // En este caso, se usa Dispatchers.IO para que la llamada a la API se realice en un hilo de E/S
+            // Si no se usa withContext, la llamada a la API podría bloquear el hilo principal y/o tareas no podrian ejecutarse
+            val call = Servicio().getProducts()
+            // Se instancia una llamada (call) a la API que esta dentro de Servicio
+            val response = call.execute()
+            // Se realiza la llamada a la API y se espera una respuesta (response)
+            if (response.isSuccessful) {
+                // Si se obtiene una respuesta exitosa se obtiene el cuerpo de la respuesta
+                response.body()
+            } else {
+                // Si no se obtiene una respuesta exitosa se imprime el código de error
+                println("Error in Response: ${response.code()}")
+                null
             }
-
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                println("Error en la llamada: ${t.message}")
-            }
-        })
-        return emptyList()
-
+        }
     }
 }
