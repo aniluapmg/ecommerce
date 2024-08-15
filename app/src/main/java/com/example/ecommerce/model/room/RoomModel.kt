@@ -2,7 +2,6 @@ package com.example.ecommerce.model.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.ecommerce.data.Product
 import com.example.ecommerce.model.model.ProductEntity
 
 @Database(

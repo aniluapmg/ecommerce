@@ -16,25 +16,25 @@ class AdapterSearch(
 
     private lateinit var binding: ItemProductBinding
 
-    //private lateinit var products: List<Product>
-
     inner class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
         // Inicialización de binding
         init {
             binding = ItemProductBinding.bind(itemLayoutView)
         }
+
         fun onBind(product: Product) {
             binding.nameProduct.text = product.title
             binding.priceProduct.text = product.price.toString()
-            Picasso.get().load(product.url).into(binding.imgProduct) //mostramos la imagen recuperada con piccaso
+            Picasso.get().load(product.url)
+                .into(binding.imgProduct) //mostramos la imagen recuperada con piccaso
 
         }
 
     }
 
-    fun setListProducts(productsResponse: List<Product>): List<Product> {
+    fun setListProducts(productsResponse: List<Product>) {
         products = productsResponse
-        return products
+        notifyDataSetChanged()
     }
 
     /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +43,9 @@ class AdapterSearch(
     }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false))
+        ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
+        )
 
     override fun getItemCount(): Int = products.size
 
