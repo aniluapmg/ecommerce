@@ -3,6 +3,7 @@ package com.example.ecommerce.repository
 import com.example.ecommerce.Ecommerce
 import com.example.ecommerce.data.Product
 import com.example.ecommerce.data.productEntityListToProductList
+import com.example.ecommerce.data.productEntityToProduct
 import com.example.ecommerce.data.toEntity
 import com.example.ecommerce.model.retrofit.ProductResponse
 import com.example.ecommerce.model.retrofit.Servicio
@@ -20,7 +21,6 @@ class ProductRepositoryImp : ProductRepository {
         //Si hay productos, devolverlos
         //Si no hay productos, obtenerlos de la API y devolverlos
         //Luego de obtenerlos de la API, guardarlos en la base de datos
-
         return withContext(Dispatchers.IO) {
             var productFromDatabase = Ecommerce.database.productDao().getAll()
 
@@ -35,8 +35,15 @@ class ProductRepositoryImp : ProductRepository {
         }
     }
 
-    override suspend fun getProductById(id: Int): Product {
-        TODO("Not yet implemented")
+    //Se obtiene un Productro a través de su id
+    override suspend fun getProductById(id: Int): Product? {
+        return withContext(Dispatchers.IO) {
+            //Se usa withContext para cambiar el hilo de ejecución a un hilo de E/S
+            //Se declara una variable donde se guarda la consulta hacia la bbdd
+            val productFromDatabase = Ecommerce.database.productDao().getProductById(id)
+            //Luego entrega el ProductoEntity(Producto en la bbdd) transformado a uno Product(Producto para la UI)
+            productFromDatabase?.let { productEntityToProduct(it) }
+        }
     }
 
     override suspend fun addProduct(product: Product) {

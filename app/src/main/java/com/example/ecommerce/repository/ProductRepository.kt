@@ -7,7 +7,7 @@ interface ProductRepository {
     // Diferenciar que Product hacer referencia a data class del proyecto
     // y ProductEntity a la data class de la tabla de la bbdd
     suspend fun getProducts(): List<Product>
-    suspend fun getProductById(id: Int): Product
+    suspend fun getProductById(id: Int): Product?
     suspend fun addProduct(product: Product)
     suspend fun updateProduct(product: Product)
     suspend fun deleteProduct(product: Product) // uno elimina un todo, no por parte.
