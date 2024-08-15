@@ -1,20 +1,16 @@
 package com.example.ecommerce.repository
 
-import com.example.ecommerce.Ecommerce
+import com.example.ecommerce.EcommerceApp
 import com.example.ecommerce.data.Product
 import com.example.ecommerce.data.productEntityListToProductList
 import com.example.ecommerce.data.productEntityToProduct
 import com.example.ecommerce.data.toEntity
 import com.example.ecommerce.model.retrofit.ProductResponse
-import com.example.ecommerce.model.retrofit.Servicio
+import com.example.ecommerce.model.retrofit.Service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ProductRepositoryImp : ProductRepository {
-
-    // Se agrego el cambio a corrutinas y tambien se le agrego el Flow ya que es una funcion asincrona
-    // Al ser una funcion asincrona se quiere decir que puede tardar un tiempo en responder
-    // productDao se usa para acceder a la bbdd y así poder usarlos
 
     override suspend fun getProducts(): List<Product> {
         //Chequear si hay productos en la base de datos
@@ -22,14 +18,13 @@ class ProductRepositoryImp : ProductRepository {
         //Si no hay productos, obtenerlos de la API y devolverlos
         //Luego de obtenerlos de la API, guardarlos en la base de datos
         return withContext(Dispatchers.IO) {
-            var productFromDatabase = Ecommerce.database.productDao().getAll()
-
+            var productFromDatabase = EcommerceApp.database.productDao().getAll()
             if (productFromDatabase.isEmpty()) {
                 val productFromApi = getProductsFromApi()
                 productFromApi?.forEach {
-                    Ecommerce.database.productDao().insertProduct(it.toEntity())
+                    EcommerceApp.database.productDao().insertProduct(it.toEntity())
                 }
-                productFromDatabase = Ecommerce.database.productDao().getAll()
+                productFromDatabase = EcommerceApp.database.productDao().getAll()
             }
             productEntityListToProductList(productFromDatabase)
         }
@@ -40,7 +35,7 @@ class ProductRepositoryImp : ProductRepository {
         return withContext(Dispatchers.IO) {
             //Se usa withContext para cambiar el hilo de ejecución a un hilo de E/S
             //Se declara una variable donde se guarda la consulta hacia la bbdd
-            val productFromDatabase = Ecommerce.database.productDao().getProductById(id)
+            val productFromDatabase = EcommerceApp.database.productDao().getProductById(id)
             //Luego entrega el ProductoEntity(Producto en la bbdd) transformado a uno Product(Producto para la UI)
             productFromDatabase?.let { productEntityToProduct(it) }
         }
@@ -58,7 +53,6 @@ class ProductRepositoryImp : ProductRepository {
         TODO("Not yet implemented")
     }
 
-
     // Método para llamar a la API
     private suspend fun getProductsFromApi(): List<ProductResponse>? {
         // Llamada a la API utilizando Retrofit
@@ -67,7 +61,7 @@ class ProductRepositoryImp : ProductRepository {
             // E/S es donde se hacen operaciones de entrada/salida, como la red o la base de datos
             // En este caso, se usa Dispatchers.IO para que la llamada a la API se realice en un hilo de E/S
             // Si no se usa withContext, la llamada a la API podría bloquear el hilo principal y/o tareas no podrian ejecutarse
-            val call = Servicio.getProduct.getProducts()
+            val call = Service.getProduct.getProducts()
             // Se instancia una llamada (call) a la API que esta dentro de Servicio
             val response = call.execute()
             // Se realiza la llamada a la API y se espera una respuesta (response)

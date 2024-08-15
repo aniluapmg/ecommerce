@@ -13,7 +13,7 @@ interface MyAPI {
     fun getProducts(): Call<List<ProductResponse>>
 }
 
-object Servicio {
+object Service {
     private const val BASE_URL = "https://fakestoreapi.com/"
     val getProduct: MyAPI
         get() {

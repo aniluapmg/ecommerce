@@ -9,7 +9,7 @@ import com.example.ecommerce.databinding.ActivityMainBinding
 import com.example.ecommerce.view.fragments.LoginFragment
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val loginFragment = LoginFragment()
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setCurrentFragment(loginFragment)
     }
     
-    fun setCurrentFragment(fragment: Fragment) {
+    private fun setCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayout, fragment)
             commit()

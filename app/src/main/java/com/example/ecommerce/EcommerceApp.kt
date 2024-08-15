@@ -4,7 +4,7 @@ import android.app.Application
 import com.example.ecommerce.model.provider.ProductProvider
 import com.example.ecommerce.model.room.ProductDatabase
 
-class Ecommerce : Application() {
+class EcommerceApp : Application() {
 
     private val productProvider = ProductProvider()
 

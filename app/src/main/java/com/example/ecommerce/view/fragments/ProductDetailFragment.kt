@@ -89,6 +89,7 @@ class ProductDetailFragment : Fragment() {
         }
     }
 
+    //Se usa el onDetroyView para "destruir" la vista después de salir del detalle
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
