@@ -17,7 +17,6 @@ import com.example.ecommerce.view.viewModel.ProductViewModel
 import kotlinx.coroutines.launch
 
 class ProductFragment : Fragment() {
-
     private var productAdapter: AdapterSearch = AdapterSearch()
     private lateinit var binding: FragmentProductBinding
     private lateinit var recyclerView: RecyclerView
@@ -36,8 +35,8 @@ class ProductFragment : Fragment() {
         //Generalmente, sólo se crean las instancias de funciones o metodos
         //Ya que de esta manera se evita sobrecargar el onCreateView y dejar sólo lo principal
         //De esta forma se logra desligar tareas al onCreateView
-        startRecyclerView()
         getProducts()
+        startRecyclerView()
         setupProductDetailNavigation()
         return binding.root
     }
@@ -45,13 +44,14 @@ class ProductFragment : Fragment() {
     //Para inicializar el RecyclerView
     private fun startRecyclerView() {
         recyclerView = binding.rvProduct
-        recyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = productAdapter // productAdapter sin ()
     }
 
     //Se utiliza para navegar al detalle del producto
     private fun setupProductDetailNavigation() {
+        //Al momento de hacer click en el producto seleccionado se le va a capturar el id a través de bundle
+        //Y de esta forma el id será entregado al siguiente fragment
         productAdapter.onClick = { itemId ->
             val bundle = bundleOf("productId" to itemId)
             val productDetailFragment = ProductDetailFragment()

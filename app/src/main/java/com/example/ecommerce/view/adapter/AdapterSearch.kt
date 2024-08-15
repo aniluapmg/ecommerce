@@ -15,13 +15,9 @@ class AdapterSearch(
 ) : RecyclerView.Adapter<AdapterSearch.ViewHolder>() {
 
     var onClick: ((Int) -> Unit)? = null
-    private lateinit var binding: ItemProductBinding
 
-    inner class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
-        // Inicialización de binding
-        init {
-            binding = ItemProductBinding.bind(itemLayoutView)
-        }
+    inner class ViewHolder(private val binding: ItemProductBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(product: Product) {
             binding.nameProduct.text = product.title
@@ -35,7 +31,6 @@ class AdapterSearch(
                 onClick?.invoke(productId)
             }
         }
-
     }
 
     fun setListProducts(productsResponse: List<Product>) {
@@ -43,20 +38,14 @@ class AdapterSearch(
         notifyDataSetChanged()
     }
 
-    /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding.root)
-    }*/
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
-        )
+        return ViewHolder(binding)
+    }
 
     override fun getItemCount(): Int = products.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
         holder.onBind(products[position])
-
 
 }
